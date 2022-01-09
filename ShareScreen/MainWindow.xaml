@@ -1,0 +1,42 @@
+﻿<Window x:Class="ShareScreen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Compartilhar Tela"
+        Height="160"
+        Width="300"
+        Closed="MainWindow_OnClosed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+              Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+                   Content="Porta: " />
+            <TextBox x:Name="TbPort"
+                     Grid.Column="1" />
+        </Grid>
+        <Button x:Name="BStart"
+                Grid.Row="1"
+                Content="Iniciar"
+                Margin="20"
+                VerticalAlignment="Top"
+                Height="30"
+                Width="100"
+                Click="BStart_OnClick" />
+        <Button x:Name="BStop"
+                Grid.Row="1"
+                Content="Parar"
+                Margin="30"
+                VerticalAlignment="Top"
+                Height="30"
+                Width="100"
+                Visibility="Collapsed"
+                Click="BStop_OnClick" />
+    </Grid>
+</Window>

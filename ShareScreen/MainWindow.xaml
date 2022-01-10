@@ -4,6 +4,8 @@
         Title="Compartilhar Tela"
         Height="160"
         Width="300"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         Closed="MainWindow_OnClosed">
     <Grid>
         <Grid.RowDefinitions>
@@ -32,7 +34,7 @@
         <Button x:Name="BStop"
                 Grid.Row="1"
                 Content="Parar"
-                Margin="30"
+                Margin="20"
                 VerticalAlignment="Top"
                 Height="30"
                 Width="100"

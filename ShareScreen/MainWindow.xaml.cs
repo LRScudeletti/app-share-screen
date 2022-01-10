@@ -8,10 +8,10 @@ namespace ShareScreen
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private static Process _process;
-        private static StreamingServer _streamingServer;
+        private static Process _process = null!;
+        private static StreamingServer _streamingServer = null!;
 
         public MainWindow()
         {
@@ -69,10 +69,10 @@ namespace ShareScreen
 
         private void MainWindow_OnClosed(object? sender, EventArgs e)
         {
-            _streamingServer?.Stop();
+            _streamingServer.Stop();
 
-            _process?.Refresh();
-            _process?.Kill();
+            _process.Refresh();
+            _process.Kill();
 
             StopServer();
         }

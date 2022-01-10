@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 
@@ -51,22 +49,15 @@ namespace ShareScreen
             return Encoding.ASCII.GetBytes(text);
         }
 
-        private static MemoryStream BytesOf(Image image)
-        {
-            var memoryStream = new MemoryStream();
-            image.Save(memoryStream, ImageFormat.Jpeg);
-            return memoryStream;
-        }
-
         public void Dispose()
         {
             try
             {
-                Stream?.Dispose();
+                Stream.Dispose();
             }
             finally
             {
-                Stream = null;
+                Stream = null!;
             }
         }
     }

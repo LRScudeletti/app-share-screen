@@ -6,7 +6,6 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Windows;
 using Size = System.Drawing.Size;
 
 namespace ShareScreen
@@ -14,7 +13,7 @@ namespace ShareScreen
     public class StreamingServer : IDisposable
     {
         private readonly List<Socket> _clients;
-        private Thread _thread;
+        private Thread? _thread;
 
         public StreamingServer() : this(Screen.Snapshots(1920, 1080, true))
         { }
@@ -38,7 +37,7 @@ namespace ShareScreen
         {
             lock (this)
             {
-                _thread = new Thread(ServerThread) { IsBackground = true };
+                _thread = new Thread(ServerThread!) { IsBackground = true };
                 _thread.Start(port);
             }
         }
@@ -48,7 +47,7 @@ namespace ShareScreen
             if (!IsRunning) return;
             try
             {
-                _thread.Abort();
+                _thread!.Interrupt();
             }
             finally
             {
@@ -84,7 +83,7 @@ namespace ShareScreen
                 server.Listen(10);
 
                 foreach (var client in server.IncomingConnections())
-                    ThreadPool.QueueUserWorkItem(ClientThread, client);
+                    ThreadPool.QueueUserWorkItem(ClientThread!, client);
             }
             catch
             {
@@ -137,16 +136,12 @@ namespace ShareScreen
         {
             while (true)
                 yield return server.Accept();
+            // ReSharper disable once IteratorNeverReturns
         }
     }
 
     public static class Screen
     {
-        public static IEnumerable<Image> Snapshots()
-        {
-            return Snapshots(1920, 1080, true);
-        }
-
         public static IEnumerable<Image> Snapshots(int width, int height, bool showCursor)
         {
             var size = new Size(1920, 1080);
@@ -174,6 +169,7 @@ namespace ShareScreen
 
                 yield return bitmap;
             }
+            // ReSharper disable once IteratorNeverReturns
         }
 
         internal static IEnumerable<MemoryStream> Streams(this IEnumerable<Image> source)
